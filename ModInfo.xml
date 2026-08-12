@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModInfo>
+  <Name value="0_CraftFromContainersServerFix" />
+  <DisplayName value="Craft From Containers - Server Fix" />
+  <Description value="Fixes a dedicated-server-only crash in Aedenthorn's shared AedenthornUtils.GetAssetPath (used by CraftFromContainers and possibly other Aedenthorn mods) where Assembly.Location comes back empty on the headless server build, causing Path.GetDirectoryName to throw 'Invalid path' during mod init. Patches the path lookup and, if the affected mod already failed to load, retries its init once the fix is in place. Not affiliated with the original mod author - a local compatibility patch only." />
+  <Author value="joeyjoejoe" />
+  <Version value="1.0.0.0" />
+  <GameVersion value="2.6" />
+</ModInfo>
