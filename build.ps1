@@ -109,7 +109,18 @@ if (Test-Path (Join-Path $scriptRoot "README.md")) {
     Copy-Item (Join-Path $scriptRoot "README.md") (Join-Path $release "README.md") -Force
 }
 
+
+# Package a versioned release zip alongside the release folder. The version comes from ModInfo.xml
+# (the single source of truth), not from any folder name, so the source checkout itself can just be
+# named "Z_CraftFromContainersServerFix" with no version/game-version embedded.
+[xml]$ModInfoXml = Get-Content (Join-Path $release "ModInfo.xml")
+$ReleaseVersion = $ModInfoXml.ModInfo.Version.value
+$ZipPath = Join-Path $OutputRoot "Z_CraftFromContainersServerFix_v$ReleaseVersion.zip"
+if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
+Compress-Archive -Path $release -DestinationPath $ZipPath
+
 Write-Host ""
 Write-Host "Built: $dllOut"
 Write-Host "Release folder: $release"
+Write-Host "Release zip: $ZipPath"
 Write-Host "Server-side only - copy the whole $modName folder into your DEDICATED SERVER's Mods directory. It is not needed on player clients."
